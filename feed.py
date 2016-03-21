@@ -36,15 +36,15 @@ def fetch_events(url):
 
 def generate_feed(location, events):
     fg = FeedGenerator()
-    fg.title('yo')
-    fg.link( href='http://example.com', rel='alternate' )
-    fg.description('f')
+    fg.title('Upcoming Concerts in {}'.format(location.capitalize()))
+    fg.link(href='http://example.com', rel='alternate' )
+    fg.description('Upcoming rockin\' concerts')
     for event in events.values():
         fe = fg.add_entry()
         fe.id(event['link'])
         fe.title(event['groups'])
-        # fe.subtitle(u'{} / {}'.format(event['city_venue'], event['price']))
-        # fe.link(href=event['link'])
+        fe.description(u'{} / {} / {}'.format(event['date'], event['city_venue'], event['price']))
+        fe.link(href=event['link'])
     fg.rss_file('html/{}-rss.xml'.format(location))
 
 
