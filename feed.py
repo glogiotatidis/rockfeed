@@ -8,7 +8,12 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from collections import OrderedDict
 
 
-LOCATIONS = {'athens': 'http://www.rocking.gr/agenda/athens'}
+LOCATIONS = {
+    'athens': 'http://www.rocking.gr/agenda/athens',
+    'thessaloniki': 'http://www.rocking.gr/agenda/thessaloniki',
+    'patra': 'http://www.rocking.gr/agenda/patra',
+    'rest': 'http://www.rocking.gr/agenda/rest',
+    }
 
 
 def fetch_events(url):
