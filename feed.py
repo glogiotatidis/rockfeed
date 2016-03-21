@@ -5,13 +5,14 @@ import requests
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 from apscheduler.schedulers.blocking import BlockingScheduler
+from collections import OrderedDict
 
 
 LOCATIONS = {'athens': 'http://www.rocking.gr/agenda/athens'}
 
 
 def fetch_events(url):
-    events = {}
+    events = OrderedDict()
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'lxml')
 
