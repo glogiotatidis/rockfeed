@@ -69,9 +69,9 @@ def generate():
 @click.option('--generate-once/--schedule', default=True)
 @click.option('--minutes', default=60)
 def main(generate_once, minutes):
-    if generate_once:
-        generate()
-    else:
+    generate()
+
+    if not generate_once:
         print('Starting schedule, every {} minutes'.format(minutes))
         scheduler = BlockingScheduler()
         scheduler.add_job(generate, 'interval', minutes=1)
