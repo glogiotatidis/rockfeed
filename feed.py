@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import json
 import click
 import requests
 from bs4 import BeautifulSoup
@@ -6,12 +7,12 @@ from feedgen.feed import FeedGenerator
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
-URL = 'http://www.rocking.gr/agenda/athens'
+LOCATIONS = {'athens': 'http://www.rocking.gr/agenda/athens'}
 
 
-def fetch_events():
+def fetch_events(url):
     events = {}
-    response = requests.get(URL)
+    response = requests.get(url)
     soup = BeautifulSoup(response.content, 'lxml')
 
     for datebox in soup.find_all('div', attrs={'class': 'date-box'}):
@@ -32,7 +33,7 @@ def fetch_events():
     return events
 
 
-def generate_feed(events):
+def generate_feed(location, events):
     fg = FeedGenerator()
     fg.title('yo')
     fg.link( href='http://example.com', rel='alternate' )
@@ -43,14 +44,19 @@ def generate_feed(events):
         fe.title(event['groups'])
         # fe.subtitle(u'{} / {}'.format(event['city_venue'], event['price']))
         # fe.link(href=event['link'])
-    fg.rss_file('html/rss.xml')
+    fg.rss_file('html/{}-rss.xml'.format(location))
 
+
+def generate_json(location, events):
+    with open('html/{}.json'.format(location), 'wb') as fp:
+        json.dump(events, fp)
 
 
 def generate():
-    print('Generating')
-    events = fetch_events()
-    generate_feed(events)
+    for location, url in LOCATIONS.items():
+        events = fetch_events(url)
+        generate_json(location, events)
+        generate_feed(location, events)
 
 
 @click.command()
