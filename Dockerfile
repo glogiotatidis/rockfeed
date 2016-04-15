@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-EXPOSE 5000
+EXPOSE 80
 WORKDIR /app
 CMD ["honcho", "start"]
 
