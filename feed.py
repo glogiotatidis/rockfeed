@@ -50,11 +50,11 @@ def generate_feed(location, events):
         fe.title(event['groups'])
         fe.description(u'{} / {} / {}'.format(event['date'], event['city_venue'], event['price']))
         fe.link(href=event['link'])
-    fg.rss_file('html/{}.rss'.format(location))
+    fg.rss_file('html/feeds/{}.rss'.format(location))
 
 
 def generate_json(location, events):
-    with open('html/{}.json'.format(location), 'wb') as fp:
+    with open('html/feeds/{}.json'.format(location), 'wb') as fp:
         json.dump(events, fp)
 
 
